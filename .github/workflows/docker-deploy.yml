@@ -32,12 +32,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: jakebriscoe/jakebriscoe.com
+          images: ${{ secrets.DOCKER_HUB_URL }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: ${{ steps.tag_bump.outputs.tag }}
+          tags: ${{ secrets.DOCKER_HUB_URL }}:${{ steps.tag_bump.outputs.tag }} , ${{ secrets.DOCKER_HUB_URL }}:latest
           labels: ${{ steps.meta.outputs.labels }}
