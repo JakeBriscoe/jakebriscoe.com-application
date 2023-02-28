@@ -48,10 +48,9 @@ jobs:
           repository: ${{ secrets.INFRASTRUCTURE_REPO }}
           token: ${{ secrets.INFRASTRUCTURE_PAT }}
 
+      - uses: mikefarah/yq@master
+
       - name: Push to infrastructure repo
-        uses: mikefarah/yq@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.INFRASTRUCTURE_PAT }}
         run: |
           yq '(.spec.template.spec.containers[].image | select(. == "${{ secrets.DOCKER_HUB_URL }}:v*")) = "${{ secrets.DOCKER_HUB_URL }}:v0.3.0"' *deployment*.yaml
 
