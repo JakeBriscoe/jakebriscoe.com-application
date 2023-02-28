@@ -43,7 +43,7 @@ jobs:
       #     labels: ${{ steps.meta.outputs.labels }}
 
       - name: Checkout infrastructure repo
-        # uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           repository: ${{ secrets.INFRASTRUCTURE_REPO }}
           token: ${{ secrets.INFRASTRUCTURE_PAT }}
