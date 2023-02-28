@@ -54,10 +54,10 @@ jobs:
         run: |
           yq -i '(.spec.template.spec.containers[].image | select(. == "${{ secrets.DOCKER_HUB_URL }}:v*")) = "${{ secrets.DOCKER_HUB_URL }}:v0.3.0"' *deployment*.yaml
 
-          git add *deployment*.yaml
-          git commit -m "Updated image version to v0.3.0 for ${{ github.event.repository.name }}"
-
           git config user.email "${{ secrets.AUTHOR_EMAIL }}"
           git config user.name "Github workflow"
+
+          git add *deployment*.yaml
+          git commit -m "Updated image version to v0.3.0 for ${{ github.event.repository.name }}"
 
           git push
