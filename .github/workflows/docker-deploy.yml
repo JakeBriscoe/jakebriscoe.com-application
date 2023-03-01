@@ -47,13 +47,14 @@ jobs:
         with:
           repository: ${{ secrets.INFRASTRUCTURE_REPO }}
           token: ${{ secrets.INFRASTRUCTURE_PAT }}
-          path: infrastructure-repo
+          path: ./infrastructure-repo
 
       - uses: mikefarah/yq@master
 
       - name: Push to infrastructure repo
-        working-directory: /infrastructure-repo
         run: |
+          cd infrastructure-repo
+
           yq -i '(.spec.template.spec.containers[].image | select(. == "${{ secrets.DOCKER_HUB_URL }}:v*")) = "${{ secrets.DOCKER_HUB_URL }}:${{ steps.tag_bump.outputs.tag }}"' *deployment*.yaml
 
           git config user.email "${{ secrets.AUTHOR_EMAIL }}"
