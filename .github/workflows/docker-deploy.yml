@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_and_push:
-    name: Build and push Docker image
+    name: Build and deploy to Docker Hub and infrastructure repo
     runs-on: ubuntu-latest
 
     steps:
@@ -52,6 +52,7 @@ jobs:
       - uses: mikefarah/yq@master
 
       - name: Push to infrastructure repo
+        working-directory: /infrastructure-repo
         run: |
           yq -i '(.spec.template.spec.containers[].image | select(. == "${{ secrets.DOCKER_HUB_URL }}:v*")) = "${{ secrets.DOCKER_HUB_URL }}:${{ steps.tag_bump.outputs.tag }}"' *deployment*.yaml
 
