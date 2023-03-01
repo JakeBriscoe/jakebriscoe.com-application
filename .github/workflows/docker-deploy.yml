@@ -47,6 +47,7 @@ jobs:
         with:
           repository: ${{ secrets.INFRASTRUCTURE_REPO }}
           token: ${{ secrets.INFRASTRUCTURE_PAT }}
+          path: infrastructure-repo
 
       - uses: mikefarah/yq@master
 
