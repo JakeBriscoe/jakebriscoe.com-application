@@ -23,7 +23,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
         log.Print("Hello world received a request.")
         target := os.Getenv("TARGET")
         if target == "" {
-                target = "World! testing"
+                target = "World! I sure hope you see this"
         }
         fmt.Fprintf(w, "Hello %s!\n", target)
 }
