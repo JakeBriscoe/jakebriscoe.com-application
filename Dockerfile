@@ -15,27 +15,42 @@
 # USER nonroot:nonroot
 # CMD ["/hello-app"]
 
-FROM golang:1.19.2 AS build
+# FROM golang:1.19.2 AS build
 
+# WORKDIR /app
+
+# COPY go.mod ./
+# # COPY go.sum ./
+# RUN go mod download
+
+# COPY *.go ./
+
+# RUN go build -o /docker-gs-ping
+
+# ## Deploy
+# FROM gcr.io/distroless/base-debian10
+
+# WORKDIR /
+
+# COPY --from=build /docker-gs-ping /docker-gs-ping
+
+# EXPOSE 8080
+
+# USER nonroot:nonroot
+
+# ENTRYPOINT ["/docker-gs-ping"]
+
+FROM golang:1.16-buster AS builder
 WORKDIR /app
-
-COPY go.mod ./
-# COPY go.sum ./
+COPY go.* ./
 RUN go mod download
-
 COPY *.go ./
-
-RUN go build -o /docker-gs-ping
-
-## Deploy
+RUN go build -o /hello_go_http
+# Create a new release build stage
 FROM gcr.io/distroless/base-debian10
-
+# Set the working directory to the root directory path
 WORKDIR /
-
-COPY --from=build /docker-gs-ping /docker-gs-ping
-
+# Copy over the binary built from the previous stage
+COPY --from=builder /hello_go_http /hello_go_http
 EXPOSE 8080
-
-USER nonroot:nonroot
-
-ENTRYPOINT ["/docker-gs-ping"]
+ENTRYPOINT ["/hello_go_http"]
