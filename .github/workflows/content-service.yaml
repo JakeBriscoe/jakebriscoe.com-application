@@ -1,14 +1,14 @@
 name: Content Service CI
 
+env:
+  PACKAGE_PATH: packages/content-service
+
 on:
   push:
     branches:
       - main
     # paths:
     #   - "PACKAGE_PATH/**"
-
-env:
-  PACKAGE_PATH: packages/content-service
 
 jobs:
   test:
