@@ -68,12 +68,14 @@ jobs:
         run: |
           cd infrastructure-repo
 
-          yq -i '(.spec.template.spec.containers[].image | select(. == "$DOCKER_NAME_NO_TAG:v*")) = "$Docker_Name_With_Tag"' *deployment*.yaml
+          echo "$DOCKER_NAME_NO_TAG"
+
+          yq -i '(.spec.template.spec.containers[].image | select(. == "$DOCKER_NAME_NO_TAG:v*")) = "${{ env.DOCKER_NAME_NO_TAG }}:${{ steps.tag_bump.outputs.tag }}"' *deployment*.yaml
 
           git config user.email "${{ secrets.AUTHOR_EMAIL }}"
           git config user.name "Github workflow"
 
           git add *deployment*.yaml
-          git commit -m "Updated image version to ${{ steps.tag_bump.outputs.tag }} for ${{ github.event.repository.name }}"
+          git commit -m "Updated image version to ${{ steps.tag_bump.outputs.tag }} for ${{ inputs.service-name }} from ${{ github.event.repository.name }}"
 
           git push
