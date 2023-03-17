@@ -6,6 +6,9 @@ on:
       service-name:
         required: true
         type: string
+      package-path:
+        required: true
+        type: string
 
 jobs:
   build_and_push:
@@ -26,7 +29,8 @@ jobs:
           WITH_V: true
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag jakebriscoe-website:$(date +%s)
+        run: docker build . --file ${{ inputs.package-path }}/Dockerfile
+        # --tag jakebriscoe-website:$(date +%s)
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9

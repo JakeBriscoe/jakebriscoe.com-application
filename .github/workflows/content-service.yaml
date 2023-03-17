@@ -1,15 +1,20 @@
 name: Content Service CI
 
+env:
+  PACKAGE_PATH: packages/content-service
+
 on:
   push:
     branches:
       - main
     # paths:
-    #   - "packages/content-service/**"
+    #   - "PACKAGE_PATH/**"
 
 jobs:
   call-base-workflow:
+  name: Call base service workflow
     uses: ./.github/workflows/base-workflow.yaml
     secrets: inherit
     with:
       service-name: content-service
+      package-path: PACKAGE_PATH
