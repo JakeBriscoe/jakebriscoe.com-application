@@ -46,14 +46,14 @@ jobs:
       #   DOCKER_IMAGE_WITH_TAG: "$DOCKER_NAME_NO_TAG:${{ steps.tag_bump.outputs.tag }}"
 
       - run: echo "$DOCKER_NAME_NO_TAG"
-      - run: echo "$DOCKER_IMAGE_WITH_TAG"
+      - run: echo "$DOCKER_NAME_NO_TAG:${{ steps.tag_bump.outputs.tag }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ${{ inputs.package-path }}
           push: true
-          tags: $DOCKER_IMAGE_WITH_TAG , $DOCKER_NAME_NO_TAG:latest
+          tags: $DOCKER_NAME_NO_TAG:${{ steps.tag_bump.outputs.tag }} , $DOCKER_NAME_NO_TAG:latest
 
       - name: Checkout infrastructure repo
         uses: actions/checkout@v3
