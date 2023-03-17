@@ -21,6 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - run: echo "${{ inputs.package-path }}"
+
       - name: Bump version and push tag
         id: tag_bump
         uses: anothrNick/github-tag-action@1.55.0
