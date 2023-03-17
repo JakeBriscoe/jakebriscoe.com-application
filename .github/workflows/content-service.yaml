@@ -1,8 +1,5 @@
 name: Content Service CI
 
-env:
-  PACKAGE_PATH: packages/content-service
-
 on:
   push:
     branches:
@@ -10,10 +7,18 @@ on:
     # paths:
     #   - "PACKAGE_PATH/**"
 
+env:
+  PACKAGE_PATH: packages/content-service
+
 jobs:
+  test:
+    runs-on: ubuntu-latest
+		steps:
+			- run: echo "$PACKAGE_PATH"
+
   call-base-workflow:
     uses: ./.github/workflows/base-workflow.yaml
     secrets: inherit
     with:
       service-name: content-service
-      package-path: ${{ env.PACKAGE_PATH }}
+      package-path: "$PACKAGE_PATH"
