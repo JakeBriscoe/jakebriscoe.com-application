@@ -13,8 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      env:
-        TEST: 'TEST'
+
 
       # env:
       #   DOCKER_NAME_NO_TAG: '${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}'
@@ -36,6 +35,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      env:
+        TEST: 'TEest'
 
       # env:
       #   Docker_Name_With_Tag: '$Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}'
