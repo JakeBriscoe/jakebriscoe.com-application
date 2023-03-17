@@ -1,5 +1,8 @@
 name: Content Service CI
 
+env:
+  PACKAGE_PATH: packages/content-service
+
 on:
   push:
     branches:
@@ -9,4 +12,4 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello"
+      - run: echo "$PACKAGE_PATH"
