@@ -13,9 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - env:
-        Docker_Name_No_Tag: test
-        # Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
+      env:
+        Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
 
       - uses: actions/checkout@v3
 
@@ -35,13 +34,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      #   with:
-      #     images: ${{ secrets.DOCKER_HUB_URL }}
-
-      - env:
+      env:
         Docker_Name_With_Tag: $Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}
 
       - name: Build and push Docker image
@@ -50,7 +43,6 @@ jobs:
           context: .
           push: true
           tags: $Docker_Full_Name , $Docker_Name_No_Tag:latest
-          # labels: ${{ steps.meta.outputs.labels }}
 
       - name: Checkout infrastructure repo
         uses: actions/checkout@v3
