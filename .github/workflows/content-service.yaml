@@ -12,9 +12,11 @@ on:
 
 jobs:
   call-base-workflow:
-  name: Call base service workflow
+    name: Call base service workflow
+    runs-on: ubuntu-latest
+
     uses: ./.github/workflows/base-workflow.yaml
-    secrets: inherit
-    with:
-      service-name: content-service
-      package-path: PACKAGE_PATH
+      secrets: inherit
+      with:
+        service-name: content-service
+        package-path: PACKAGE_PATH
