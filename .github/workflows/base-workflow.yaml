@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
+      Docker_Name_No_Tag: test
+      # Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
 
     steps:
       - uses: actions/checkout@v3
