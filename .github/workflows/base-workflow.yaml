@@ -70,7 +70,7 @@ jobs:
 
           echo "$DOCKER_NAME_NO_TAG"
 
-          yq -i '(.spec.template.spec.containers[].image | select(. == "$DOCKER_NAME_NO_TAG:v*")) = "${{ env.DOCKER_NAME_NO_TAG }}:${{ steps.tag_bump.outputs.tag }}"' *deployment*.yaml
+          yq -i '(.spec.template.spec.containers[].image | select(. == "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}:v*")) = "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}:${{ steps.tag_bump.outputs.tag }}"' *deployment*.yaml
 
           git config user.email "${{ secrets.AUTHOR_EMAIL }}"
           git config user.name "Github workflow"
