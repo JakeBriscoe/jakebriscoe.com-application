@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      TEST: true
+      DOCKER_NAME_NO_TAG: "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}"
+      Docker_Name_With_Tag: "$Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}"
 
     steps:
       - uses: actions/checkout@v3
@@ -33,9 +34,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
-      # env:
-      #   TEST: 'TEest'
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
