@@ -28,9 +28,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
           WITH_V: true
 
-      - name: Build the Docker image
-        run: docker build . --file ${{ inputs.package-path }}/Dockerfile
-        # --tag jakebriscoe-website:$(date +%s)
+      # - name: Build the Docker image
+      #   run: docker build . --file ${{ inputs.package-path }}/Dockerfile
+      # --tag jakebriscoe-website:$(date +%s)
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -48,7 +48,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: ${{ inputs.package-path }}
           push: true
           tags: $Docker_Name_With_Tag , $DOCKER_NAME_NO_TAG:latest
 

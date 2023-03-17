@@ -1,7 +1,7 @@
 name: Content Service CI
 
 env:
-  PACKAGE_PATH: packages/content-service
+  PACKAGE_PATH: packages/content-service/
 
 on:
   push:
@@ -21,4 +21,4 @@ jobs:
     secrets: inherit
     with:
       service-name: content-service
-      package-path: packages/content-service
+      package-path: packages/content-service/
