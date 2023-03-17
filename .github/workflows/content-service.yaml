@@ -16,9 +16,9 @@ jobs:
 		steps:
 		  - run: echo "$PACKAGE_PATH"
 
-  call-base-workflow:
-    uses: ./.github/workflows/base-workflow.yaml
-    secrets: inherit
-    with:
-      service-name: content-service
-      package-path: "$PACKAGE_PATH"
+  # call-base-workflow:
+  #   uses: ./.github/workflows/base-workflow.yaml
+  #   secrets: inherit
+  #   with:
+  #     service-name: content-service
+  #     package-path: "$PACKAGE_PATH"
