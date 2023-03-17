@@ -53,7 +53,7 @@ jobs:
         with:
           context: ${{ inputs.package-path }}
           push: true
-          tags: ${{ env.DOCKER_NAME_NO_TAG}}:${{ steps.tag_bump.outputs.tag }} , $DOCKER_NAME_NO_TAG:latest
+          tags: ${{ env.DOCKER_NAME_NO_TAG }}:${{ steps.tag_bump.outputs.tag }} , ${{ env.DOCKER_NAME_NO_TAG }}:latest
 
       - name: Checkout infrastructure repo
         uses: actions/checkout@v3
