@@ -27,7 +27,7 @@ jobs:
           WITH_V: true
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag jakebriscoe-website:$(date +%s) 
+        run: docker build . --file Dockerfile --tag jakebriscoe-website:$(date +%s)
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -60,7 +60,7 @@ jobs:
           path: ./infrastructure-repo
 
       - uses: mikefarah/yq@master
-
+      
       - name: Push to infrastructure repo
         run: |
           cd infrastructure-repo
