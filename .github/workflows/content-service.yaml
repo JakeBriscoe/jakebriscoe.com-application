@@ -16,4 +16,4 @@ jobs:
     secrets: inherit
     with:
       service-name: content-service
-      package-path: "$PACKAGE_PATH"
+      package-path: ${{ env.PACKAGE_PATH }}

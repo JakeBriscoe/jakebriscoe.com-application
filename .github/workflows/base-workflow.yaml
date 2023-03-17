@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Set environment variable
-        run: echo "DOCKER_IMAGE_WITH_TAG=$(echo $DOCKER_NAME_NO_TAG:${{ steps.tag_bump.outputs.tag }} | cut -c 1-6)" >> $GITHUB_ENV
+        run: echo "DOCKER_IMAGE_WITH_TAG=$(echo ${{ env.DOCKER_NAME_NO_TAG }}:${{ steps.tag_bump.outputs.tag }} | cut -c 1-6)" >> $GITHUB_ENV
 
       # for whatever reason this doesn't work
       # env:
