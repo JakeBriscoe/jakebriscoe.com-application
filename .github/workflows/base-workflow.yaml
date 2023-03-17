@@ -12,11 +12,11 @@ jobs:
     name: Build and deploy to Docker Hub and infrastructure repo
     runs-on: ubuntu-latest
 
-    env:
-      Docker_Name_No_Tag: test
-      # Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
-
     steps:
+      env:
+        Docker_Name_No_Tag: test
+        # Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
+
       - uses: actions/checkout@v3
 
       - name: Bump version and push tag
