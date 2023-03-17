@@ -13,11 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-
-      # env:
-      #   DOCKER_NAME_NO_TAG: '${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}'
-
       - uses: actions/checkout@v3
 
       - name: Bump version and push tag
@@ -38,10 +33,7 @@ jobs:
 
       env:
         TEST: 'TEest'
-
-      # env:
-      #   Docker_Name_With_Tag: '$Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}'
-
+        
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
