@@ -12,10 +12,6 @@ jobs:
     name: Build and deploy to Docker Hub and infrastructure repo
     runs-on: ubuntu-latest
 
-    env:
-      DOCKER_NAME_NO_TAG: "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}"
-      Docker_Name_With_Tag: "$Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}"
-
     steps:
       - uses: actions/checkout@v3
 
@@ -35,12 +31,17 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
+      - name: Set environment variables
+        env:
+          DOCKER_NAME_NO_TAG: "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}"
+          Docker_Name_With_Tag: "$Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: $Docker_Full_Name , $Docker_Name_No_Tag:latest
+          tags: $Docker_Name_With_Tag , $DOCKER_NAME_NO_TAG:latest
 
       - name: Checkout infrastructure repo
         uses: actions/checkout@v3
@@ -55,7 +56,7 @@ jobs:
         run: |
           cd infrastructure-repo
 
-          yq -i '(.spec.template.spec.containers[].image | select(. == "$Docker_Name_No_Tag:v*")) = "$Docker_Full_Name"' *deployment*.yaml
+          yq -i '(.spec.template.spec.containers[].image | select(. == "$DOCKER_NAME_NO_TAG:v*")) = "$Docker_Name_With_Tag"' *deployment*.yaml
 
           git config user.email "${{ secrets.AUTHOR_EMAIL }}"
           git config user.name "Github workflow"
