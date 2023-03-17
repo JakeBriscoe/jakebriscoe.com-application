@@ -4,8 +4,8 @@ on:
   workflow_call:
     inputs:
       service-name:
-        type: string
         required: true
+        type: string
 
 jobs:
   build_and_push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      env:
+      - env:
         Docker_Name_No_Tag: test
         # Docker_Name_No_Tag: ${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}
 
@@ -41,7 +41,7 @@ jobs:
       #   with:
       #     images: ${{ secrets.DOCKER_HUB_URL }}
 
-      env:
+      - env:
         Docker_Name_With_Tag: $Docker_Name_No_Tag:${{ steps.tag_bump.outputs.tag }}
 
       - name: Build and push Docker image
@@ -60,7 +60,7 @@ jobs:
           path: ./infrastructure-repo
 
       - uses: mikefarah/yq@master
-      
+
       - name: Push to infrastructure repo
         run: |
           cd infrastructure-repo
