@@ -7,8 +7,7 @@ on:
 
 jobs:
   call-base-workflow:
-    # try relative path
-    uses: ${{ github.event.repository.name }}/.github/workflows/base-workflow.yaml
+    uses: ./.github/workflows/base-workflow.yaml
     secrets: inherit
     with:
       service-name: content-service
