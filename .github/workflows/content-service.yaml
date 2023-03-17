@@ -1,7 +1,7 @@
 name: Content Service CI
 
-env:
-  PACKAGE_PATH: packages/content-service
+# env:
+#   PACKAGE_PATH: packages/content-service
 
 on:
   push:
