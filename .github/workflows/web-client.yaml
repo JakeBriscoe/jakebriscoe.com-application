@@ -1,0 +1,14 @@
+name: Web Client CI
+
+on:
+  push:
+    paths:
+      - "packages/web-client/**"
+
+jobs:
+  call-base-workflow:
+    uses: ./.github/workflows/base-workflow.yaml
+    secrets: inherit
+    with:
+      service-name: web-client
+      package-path: packages/web-client/

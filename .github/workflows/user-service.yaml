@@ -1,0 +1,14 @@
+name: User Service CI
+
+on:
+  push:
+    paths:
+      - "packages/user-service/**"
+
+jobs:
+  call-base-workflow:
+    uses: ./.github/workflows/base-workflow.yaml
+    secrets: inherit
+    with:
+      service-name: user-service
+      package-path: packages/user-service/

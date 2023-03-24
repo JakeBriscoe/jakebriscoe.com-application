@@ -1,21 +1,11 @@
 name: Content Service CI
 
-env:
-  PACKAGE_PATH: packages/content-service/
-
 on:
   push:
-    branches:
-      - main
-    # paths:
-    #   - "PACKAGE_PATH/**"
+    paths:
+      - "packages/content-service/**"
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "$PACKAGE_PATH"
-
   call-base-workflow:
     uses: ./.github/workflows/base-workflow.yaml
     secrets: inherit

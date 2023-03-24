@@ -1,0 +1,14 @@
+name: Leaderboard Service CI
+
+on:
+  push:
+    paths:
+      - "packages/leaderboard-service/**"
+
+jobs:
+  call-base-workflow:
+    uses: ./.github/workflows/base-workflow.yaml
+    secrets: inherit
+    with:
+      service-name: leaderboard-service
+      package-path: packages/leaderboard-service/

@@ -1,0 +1,14 @@
+name: Game Service CI
+
+on:
+  push:
+    paths:
+      - "packages/game-service/**"
+
+jobs:
+  call-base-workflow:
+    uses: ./.github/workflows/base-workflow.yaml
+    secrets: inherit
+    with:
+      service-name: game-service
+      package-path: packages/game-service/

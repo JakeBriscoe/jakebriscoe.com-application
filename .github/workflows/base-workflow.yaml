@@ -28,10 +28,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
           WITH_V: true
 
-      # - name: Build the Docker image
-      #   run: docker build . --file ${{ inputs.package-path }}/Dockerfile
-      # --tag jakebriscoe-website:$(date +%s)
-
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
@@ -45,9 +41,7 @@ jobs:
       # env:
       #   DOCKER_IMAGE_WITH_TAG: "$DOCKER_NAME_NO_TAG:${{ steps.tag_bump.outputs.tag }}"
 
-      - run: echo "$DOCKER_NAME_NO_TAG"
-      - run: echo "$DOCKER_NAME_NO_TAG:${{ steps.tag_bump.outputs.tag }}"
-
+      # Each language can possibly share a Dockerfile
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -66,9 +60,7 @@ jobs:
 
       - name: Push to infrastructure repo
         run: |
-          cd infrastructure-repo
-
-          echo "$DOCKER_NAME_NO_TAG"
+          cd infrastructure-repo/apps/${{ inputs.service-name }}/dev
 
           yq -i '(.spec.template.spec.containers[].image | select(. == "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}:v*")) = "${{ secrets.DOCKER_HUB_URL }}/spotify-${{ inputs.service-name }}:${{ steps.tag_bump.outputs.tag }}"' *deployment*.yaml
 
