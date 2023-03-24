@@ -2,10 +2,10 @@ name: Game Service CI
 
 on:
   push:
+    branches:
+      - "main"
     paths:
       - "packages/game-service/**"
-    tags-ignore:
-      - "**"
 
 jobs:
   call-base-workflow:

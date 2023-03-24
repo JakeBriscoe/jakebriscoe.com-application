@@ -2,10 +2,10 @@ name: User Service CI
 
 on:
   push:
+    branches:
+      - "main"
     paths:
       - "packages/user-service/**"
-    tags-ignore:
-      - "**"
 
 jobs:
   call-base-workflow:

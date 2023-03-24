@@ -2,10 +2,10 @@ name: Web Client CI
 
 on:
   push:
+    branches:
+      - "main"
     paths:
       - "packages/web-client/**"
-    tags-ignore:
-      - "**"
 
 jobs:
   call-base-workflow:

@@ -2,10 +2,10 @@ name: Leaderboard Service CI
 
 on:
   push:
+    branches:
+      - "main"
     paths:
       - "packages/leaderboard-service/**"
-    tags-ignore:
-      - "**"
 
 jobs:
   call-base-workflow:
