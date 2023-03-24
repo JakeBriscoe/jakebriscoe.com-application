@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "packages/user-service/**"
+    tags-ignore:
+      - "**"
 
 jobs:
   call-base-workflow:

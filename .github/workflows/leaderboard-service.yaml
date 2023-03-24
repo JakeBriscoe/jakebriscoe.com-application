@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "packages/leaderboard-service/**"
+    tags-ignore:
+      - "**"
 
 jobs:
   call-base-workflow:
