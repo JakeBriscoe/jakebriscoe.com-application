@@ -1,0 +1,16 @@
+name: Postgres startup CI
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "deployment/postgres/**"
+
+jobs:
+  call-base-workflow:
+    uses: ./.github/workflows/base-workflow.yaml
+    secrets: inherit
+    with:
+      service-name: postgres-startup
+      package-path: deployment/postgres/
