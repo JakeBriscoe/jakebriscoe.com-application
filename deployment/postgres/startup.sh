@@ -3,7 +3,7 @@
 set -e
 
 # Define array of service names
-services=("game" "content" "leaderboard" "user")
+SERVICES="game content leaderboard user"
 
 # Wait for Postgres server to be ready
 until nc -z -v -w30 postgres-service 5432
@@ -14,7 +14,7 @@ do
 done
 
 # Loop through services and create secrets and databases
-for service in "${services[@]}"; do
+for service in $SERVICES; do
     # Generate random username and password
     username=$(openssl rand -hex 6)
     password=$(openssl rand -hex 16)
