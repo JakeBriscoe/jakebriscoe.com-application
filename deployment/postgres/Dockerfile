@@ -7,4 +7,4 @@ RUN apk update && \
 WORKDIR /app
 COPY startup.sh .
 
-CMD ["/bin/bash", "/app/startup.sh"]
+CMD ["/bin/sh", "/app/startup.sh"]
