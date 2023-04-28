@@ -1,8 +1,17 @@
-#!/bin/bash
+#!/bin/sh
+
 set -e
 
 # Define array of service names
 services=("game" "content" "leaderboard" "user")
+
+# Wait for Postgres server to be ready
+until nc -z -v -w30 postgres-service 5432
+do
+  echo "Waiting for Postgres server to start..."
+  # wait for 2 seconds before checking again
+  sleep 2
+done
 
 # Loop through services and create secrets and databases
 for service in "${services[@]}"; do
@@ -15,9 +24,9 @@ for service in "${services[@]}"; do
     --from-literal=username=$username \
     --from-literal=password=$password
 
-    # Can also write these tp docker-entrypoint-initdb.d/01-create-dbs.sh 
-    # which will auto run on init
     # Create the user and database
-    psql -U postgres -c "CREATE USER $username WITH PASSWORD '$password';"
-    psql -U postgres -c "CREATE DATABASE ${service}_db OWNER $username;"
+    psql -h postgres-service -U postgres -c "CREATE USER $username WITH PASSWORD '$password';"
+    psql -h postgres-service -U postgres -c "CREATE DATABASE ${service}_db OWNER $username;"
 done
+
+echo "Database initialization complete!"
