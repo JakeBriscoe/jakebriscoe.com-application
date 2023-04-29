@@ -26,11 +26,11 @@ for service in $SERVICES; do
     --from-literal=username=$username \
     --from-literal=password=$password
 
-    echo "Connecting to server with username ${POSTGRES_USER} and password ${PGPASSWORD}"
+    echo "Connecting to server with username ${POSTGRES_USER} and password ${PGPASSWORD} and db ${POSTGRES_DB}"
 
     # Create the user and database
-    psql -h postgres-service -U $POSTGRES_USER -c "CREATE USER $username WITH PASSWORD '$password';"
-    psql -h postgres-service -U $POSTGRES_USER -c "CREATE DATABASE ${service}_db OWNER $username;"
+    psql -h postgres-service -U $POSTGRES_USER -d $POSTGRES_DB -c "CREATE USER $username WITH PASSWORD '$password';"
+    psql -h postgres-service -U $POSTGRES_USER -d $POSTGRES_DB -c "CREATE DATABASE ${service}_db OWNER $username;"
 
     echo "Database created for ${service}"
 done
