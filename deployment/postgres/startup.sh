@@ -2,19 +2,16 @@
 
 set -e
 
-# Define array of service names
-SERVICES="game content leaderboard user"
-
-# Give some time for the server to start
-sleep 30
-
 # Wait for Postgres server to be ready
-until nc -z -v -w30 postgres-service 5432
+until pg_isready -h postgres-service -p 5432 -q
 do
   echo "Waiting for Postgres server to start..."
   # wait for 2 seconds before checking again
   sleep 2
 done
+
+# Define array of service names
+SERVICES="game content leaderboard user"
 
 # Loop through services and create secrets and databases
 for service in $SERVICES; do
