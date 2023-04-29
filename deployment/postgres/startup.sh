@@ -5,6 +5,9 @@ set -e
 # Define array of service names
 SERVICES="game content leaderboard user"
 
+# Give some time for the server to start
+sleep 30
+
 # Wait for Postgres server to be ready
 until nc -z -v -w30 postgres-service 5432
 do
@@ -36,3 +39,5 @@ for service in $SERVICES; do
 done
 
 echo "Database initialization complete!"
+
+exit 0
