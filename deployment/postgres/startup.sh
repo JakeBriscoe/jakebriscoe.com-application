@@ -15,6 +15,8 @@ done
 
 # Loop through services and create secrets and databases
 for service in $SERVICES; do
+    echo "Creating secrets and database for ${service}"
+
     # Generate random username and password
     username=$(openssl rand -hex 6)
     password=$(openssl rand -hex 16)
@@ -24,9 +26,14 @@ for service in $SERVICES; do
     --from-literal=username=$username \
     --from-literal=password=$password
 
+    echo "Secret created for ${service}"
+
+
     # Create the user and database
     psql -h postgres-service -U postgres -c "CREATE USER $username WITH PASSWORD '$password';"
     psql -h postgres-service -U postgres -c "CREATE DATABASE ${service}_db OWNER $username;"
+
+    echo "Database created for ${service}"
 done
 
 echo "Database initialization complete!"
