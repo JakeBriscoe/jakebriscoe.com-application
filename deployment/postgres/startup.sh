@@ -15,7 +15,7 @@ SERVICES="game content leaderboard user"
 
 # Loop through services and create secrets and databases
 for service in $SERVICES; do
-    echo "Creating secrets and database for ${service}"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') Creating secrets and database for ${service}"
 
     # Check if secret already exists
     if kubectl get secret ${service}-db-credentials >/dev/null 2>&1; then
@@ -28,27 +28,15 @@ for service in $SERVICES; do
     password=$(openssl rand -hex 16)
 
     # Create the user and database
-    if psql -h postgres-service -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE USER \"$username\" WITH PASSWORD '$password';"; then
-      echo "User created for ${service}"
-    else
-      echo "Failed to create user for ${service}"
-      continue
-    fi
+    psql -h postgres-service -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE USER \"$username\" WITH PASSWORD '$password';"
+    psql -h postgres-service -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE DATABASE ${service}_db OWNER '$username';"
 
-    if psql -h postgres-service -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE DATABASE ${service}_db OWNER '$username';"; then
-      echo "Database created for ${service}"
-    else
-      echo "Failed to create database for ${service}"
-      continue
-    fi
+    # Create Kubernetes Secret
+    kubectl create secret generic ${service}-db-credentials --from-literal=username="$username" --from-literal=password="$password"
 
-        # Create Kubernetes Secret
-    if kubectl create secret generic ${service}-db-credentials --from-literal=username="$username" --from-literal=password="$password"; then
-      echo "Secret created for ${service}"
-    else
-      echo "Failed to create secret for ${service}"
-      continue
-    fi
+    echo "$(date '+%Y-%m-%d %H:%M:%S') Finished initalizing for ${service} service"
+
+    sleep 10
 done
 
 echo "Database initialization complete!"
