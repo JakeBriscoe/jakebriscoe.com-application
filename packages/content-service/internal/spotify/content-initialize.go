@@ -9,6 +9,11 @@ import (
 func InitializeContent() error {
 	log.Print("initing content")
 
+	if tracksAlreadyExists, _ := database.AnyTrackExists(); tracksAlreadyExists {
+		log.Print("Content already initiated")
+		return nil
+	}
+
 	spotifyDtoTracks, err := GetTacksFromSeed()
 	if err != nil {
 		return err
