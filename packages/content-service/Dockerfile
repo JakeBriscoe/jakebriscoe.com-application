@@ -25,7 +25,6 @@ COPY internal/database/*.go ./internal/database/
 COPY internal/dto/*.go ./internal/dto/
 COPY internal/spotify/*.go ./internal/spotify/
 COPY internal/api/*.go ./internal/api/
-COPY sample_response.json .
 RUN go build -o /cmd/content-service/content-service ./cmd/content-service
 
 FROM gcr.io/distroless/base-debian11
