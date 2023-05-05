@@ -49,6 +49,12 @@ func ConnectDB() {
 
 	DB = db
 
+	log.Printf("Migrating Image")
+	err = DB.AutoMigrate(&Image{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	log.Printf("Migrating tracks")
 	err = DB.AutoMigrate(&Track{})
 	if err != nil {
@@ -69,12 +75,6 @@ func ConnectDB() {
 
 	log.Printf("Migrating Album")
 	err = DB.AutoMigrate(&Album{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Migrating Image")
-	err = DB.AutoMigrate(&Image{})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -40,6 +40,7 @@ type Album struct {
 }
 
 type Image struct {
+	gorm.Model
 	URL    string
 	Width  int
 	Height int
