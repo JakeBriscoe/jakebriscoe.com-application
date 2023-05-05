@@ -48,6 +48,8 @@ func ConnectDB() {
 
 	DB = db
 
+	log.Printf("DB configuration: %v", db.Config)
+
 	// Auto Migrate
 	err = DB.AutoMigrate(&Track{}, &Artist{}, &Album{}, &Image{}, &Genre{})
 	if err != nil {
