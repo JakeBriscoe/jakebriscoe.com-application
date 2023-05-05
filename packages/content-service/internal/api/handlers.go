@@ -32,5 +32,6 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func HelloWorld(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Request received: %s", r.URL.Path)
 	fmt.Fprintf(w, "Hello, world!")
 }
