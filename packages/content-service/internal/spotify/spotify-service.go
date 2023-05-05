@@ -90,7 +90,7 @@ func getArtistSeeds(numberOfArtists int) string {
 }
 
 func getSampleResponse() []dto.SpotifyTrack {
-	data, err := ioutil.ReadFile("sample_response.json")
+	data, err := ioutil.ReadFile("/app/sample_response.json")
 	if err != nil {
 		log.Fatal(err)
 	}
