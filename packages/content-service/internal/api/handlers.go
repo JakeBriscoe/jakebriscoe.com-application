@@ -3,6 +3,7 @@ package api
 import (
 	"content-service/internal/database"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -23,4 +24,13 @@ func FetchTracks(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(jsonBytes)
+}
+
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "OK")
+}
+
+func HelloWorld(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, world!")
 }
