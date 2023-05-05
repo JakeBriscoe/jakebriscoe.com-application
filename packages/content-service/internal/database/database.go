@@ -41,6 +41,7 @@ func ConnectDB() {
 
 	log.Print("Connecting to db")
 	dsn := fmt.Sprintf("host=postgres-service.dev.svc.cluster.local user=%v password=%v dbname=content_db port=5432 sslmode=disable TimeZone=Europe/London", username, password)
+	log.Printf("Connection string: %v", dsn)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
@@ -49,6 +50,8 @@ func ConnectDB() {
 	DB = db
 
 	log.Printf("DB configuration: %v", db.Config)
+	log.Printf("DB configuration: %v", DB.Config)
+	log.Printf("Connection error: %v", err)
 
 	// Auto Migrate
 	err = DB.AutoMigrate(&Track{}, &Artist{}, &Album{}, &Image{}, &Genre{})
