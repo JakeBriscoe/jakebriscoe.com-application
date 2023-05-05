@@ -118,18 +118,25 @@ func InitializeContent() error {
 	}
 
 	// Use the database to insert albums, artists, images, and genres
-	if err := database.InsertManyImages(images); err != nil {
-		return err
-	}
-	if err := database.InsertManyAlbums(albums); err != nil {
-		return err
-	}
-	if err := database.InsertManyArtists(artists); err != nil {
-		return err
-	}
-	if err := database.InsertManyGenres(genres); err != nil {
-		return err
-	}
+	// if err := database.InsertManyImages(images); err != nil {
+	// 	return err
+	// }
+	// if err := database.InsertManyAlbums(albums); err != nil {
+	// 	return err
+	// }
+	// if err := database.InsertManyArtists(artists); err != nil {
+	// 	return err
+	// }
+	// if err := database.InsertManyGenres(genres); err != nil {
+	// 	return err
+	// }
+	// if err := database.InsertManyTracks(tracks); err != nil {
+	// 	return err
+	// }
+
+	// gorm should insert the associations.
+	// -> album, artist
+	// -> genre, image
 	if err := database.InsertManyTracks(tracks); err != nil {
 		return err
 	}
