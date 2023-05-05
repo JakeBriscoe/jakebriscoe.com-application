@@ -49,39 +49,106 @@ func ConnectDB() {
 
 	DB = db
 
-	log.Printf("Migrating Image")
-	err = DB.AutoMigrate(&Image{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Migrating tracks")
-	err = DB.AutoMigrate(&Track{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Migrating Genre")
-	err = DB.AutoMigrate(&Genre{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Migrating Artist")
-	err = DB.AutoMigrate(&Artist{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Migrating Album")
-	err = DB.AutoMigrate(&Album{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// // Auto Migrate
-	// err = DB.AutoMigrate(&Track{}, &Artist{}, &Album{}, &Image{}, &Genre{})
+	// log.Printf("Migrating Image")
+	// err = DB.AutoMigrate(&Image{})
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
+
+	// log.Printf("Migrating tracks")
+	// err = DB.AutoMigrate(&Track{})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Printf("Migrating Genre")
+	// err = DB.AutoMigrate(&Genre{})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Printf("Migrating Artist")
+	// err = DB.AutoMigrate(&Artist{})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// log.Printf("Migrating Album")
+	// err = DB.AutoMigrate(&Album{})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// Auto Migrate
+	err = DB.AutoMigrate(&Track{}, &Artist{}, &Album{}, &Image{}, &Genre{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Add foreign key constraint for Album - Artist many-to-many relationship
+	migrator := DB.Migrator()
+	err = migrator.CreateConstraint(&Album{}, "Artists", &gorm.Constraint{
+		Name:             "fk_album_artist", // Constraint name
+		ForeignDBName:    "artists",         // Name of the related table
+		ForeignFieldName: "id",              // Name of the related table's primary key
+		UpdateRule:       gorm.Restrict,     // Update rule (e.g. cascade, restrict, set null)
+		DeleteRule:       gorm.Cascade,      // Delete rule (e.g. cascade, restrict, set null)
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Add foreign key constraint for Album - Genre many-to-many relationship
+	err = migrator.CreateConstraint(&Album{}, "Genres", &gorm.Constraint{
+		Name:             "fk_album_genre",
+		ForeignDBName:    "genres",
+		ForeignFieldName: "id",
+		UpdateRule:       gorm.Restrict,
+		DeleteRule:       gorm.Cascade,
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Add foreign key constraint for Artist - Genre many-to-many relationship
+	err = migrator.CreateConstraint(&Artist{}, "Genres", &gorm.Constraint{
+		Name:             "fk_artist_genre",
+		ForeignDBName:    "genres",
+		ForeignFieldName: "id",
+		UpdateRule:       gorm.Restrict,
+		DeleteRule:       gorm.Cascade,
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Add foreign key constraint for image many to many
+	// Add foreign key constraint for Album - Image many-to-many relationship
+	err = migrator.CreateConstraint(&Album{}, "Images", &gorm.Constraint{
+		Name:             "fk_album_image",
+		ForeignDBName:    "images",
+		ForeignFieldName: "id",
+		UpdateRule:       gorm.Restrict,
+		DeleteRule:       gorm.Cascade,
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Add foreign key constraint for Artist - Image many-to-many relationship
+	err = migrator.CreateConstraint(&Artist{}, "Images", &gorm.Constraint{
+		Name:             "fk_artist_image",
+		ForeignDBName:    "images",
+		ForeignFieldName: "id",
+		UpdateRule:       gorm.Restrict,
+		DeleteRule:       gorm.Cascade,
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
