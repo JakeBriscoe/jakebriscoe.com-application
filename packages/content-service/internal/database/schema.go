@@ -19,8 +19,7 @@ type Track struct {
 
 type Artist struct {
 	gorm.Model
-	Name string
-	// Followers  int
+	Name       string
 	Popularity int
 	Albums     []*Album `gorm:"many2many:album_artists;"`
 	Tracks     []*Track `gorm:"many2many:track_artists;"`

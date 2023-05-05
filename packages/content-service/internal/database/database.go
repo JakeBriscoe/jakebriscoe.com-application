@@ -49,13 +49,39 @@ func ConnectDB() {
 
 	DB = db
 
-	log.Printf("DB configuration: %v", db.Config)
-	log.Printf("DB configuration: %v", DB.Config)
-	log.Printf("Connection error: %v", err)
-
-	// Auto Migrate
-	err = DB.AutoMigrate(&Track{}, &Artist{}, &Album{}, &Image{}, &Genre{})
+	log.Printf("Migrating tracks")
+	err = DB.AutoMigrate(&Track{})
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Printf("Migrating Genre")
+	err = DB.AutoMigrate(&Genre{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Migrating Artist")
+	err = DB.AutoMigrate(&Artist{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Migrating Album")
+	err = DB.AutoMigrate(&Album{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Migrating Image")
+	err = DB.AutoMigrate(&Image{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// // Auto Migrate
+	// err = DB.AutoMigrate(&Track{}, &Artist{}, &Album{}, &Image{}, &Genre{})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }
