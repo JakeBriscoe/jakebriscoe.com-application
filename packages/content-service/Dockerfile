@@ -25,11 +25,12 @@ COPY internal/database/*.go ./internal/database/
 COPY internal/dto/*.go ./internal/dto/
 COPY internal/spotify/*.go ./internal/spotify/
 COPY internal/api/*.go ./internal/api/
-RUN go build -o /service
+RUN go build -o /cmd/content-service/content-service ./cmd/content-service
 
 FROM gcr.io/distroless/base-debian11
 WORKDIR /
-COPY --from=builder /service /service
+COPY --from=builder /cmd/content-service/content-service /cmd/content-service/content-service
 EXPOSE 8080
 USER nonroot:nonroot
-CMD ["/service"]
+CMD ["/cmd/content-service/content-service"]
+
