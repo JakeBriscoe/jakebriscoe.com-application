@@ -16,12 +16,10 @@ func StartServer() {
 	log.Print("Starting server")
 
 	// Start Server
-	go func() {
-		log.Println("Starting Server")
-		if err := http.ListenAndServe(":8080", nil); err != nil {
-			log.Fatal(err)
-		}
-	}()
+	log.Println("Starting Server")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal("Error running the server", err)
+	}
 
 	log.Print("Server started on port 8080")
 }
