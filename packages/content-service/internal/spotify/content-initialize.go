@@ -141,6 +141,7 @@ func InitializeContent() error {
 		return err
 	}
 
+	log.Print("content inserted")
 	return nil
 }
 
