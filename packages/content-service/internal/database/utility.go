@@ -50,7 +50,7 @@ func AnyTrackExists() (bool, error) {
 	var count int64
 	DB.Model(&Track{}).Count(&count)
 
-	return count == 0, nil
+	return count > 0, nil
 }
 
 // ... similar functions for other models
